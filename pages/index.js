@@ -1,14 +1,50 @@
-import xw from 'xwind'
-import ButtonReact from '../components/ButtonReact'
-import ButtonStyled from '../components/ButtonStyled'
+import firebase from '@/lib/firebase';
 
-const Index = () => (
-  <div css={xw`grid justify-center items-center h-screen space-y-20`}>
-    <div css={xw`space-y-20`}>
-      <ButtonReact>@emotion/react</ButtonReact>
-      <ButtonStyled>@emotion/styled</ButtonStyled>
+import { useForm } from 'react-hook-form';
+import xw from 'xwind';
+import Link from 'next/link';
+
+import ButtonReact from '../components/ButtonReact';
+import ButtonStyled from '../components/ButtonStyled';
+
+import { createTest } from '@/lib/db';
+
+const firestore = firebase.firestore();
+
+// <div css={xw`grid justify-center items-center h-screen space-y-20`}>
+//   <div css={xw`space-y-20`}>
+//     <ButtonReact>@emotion/react</ButtonReact>
+//     <ButtonStyled>@emotion/styled</ButtonStyled>
+//   </div>
+// </div>
+const Index = ({ data }) => {
+  console.log(data);
+  return (
+    <div css={xw`container mx-auto text-blue-500`}>
+      <Link href="/register">
+        <a css={xw`m-11 underline cursor-pointer`}>To Register</a>
+      </Link>
+      <h1>Nothing Here</h1>
+      {data.map((email, index) => (
+        <div key={index}>
+          <p>{email.email}</p>
+          <p>{email.password}</p>
+        </div>
+      ))}
     </div>
-  </div>
-)
-
-export default Index
+  );
+};
+export const getStaticProps = async (ctx) => {
+  let getAllData = [];
+  const res = await firestore.collection('users').get();
+  res.forEach((doc) => {
+    getAllData.push(doc.data());
+  });
+  console.log(getAllData);
+  return {
+    props: {
+      data: getAllData,
+    },
+  };
+};
+export default Index;

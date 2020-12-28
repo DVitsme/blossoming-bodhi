@@ -1,4 +1,5 @@
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
+// const forms = require('tailwindcss/forms');
 
 module.exports = {
   darkMode: 'class',
@@ -8,9 +9,9 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
   // xwind options
   xwind: {
     mode: 'objectstyles',
   },
-}
+};
