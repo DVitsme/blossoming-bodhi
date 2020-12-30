@@ -10,7 +10,7 @@ const SidebarItem = ({ item }) => {
     >
       <span css={xw`fill-current h-5 w-5 mt-1`}>{iconDiv}</span>
       <a>
-        <span css={xw`ml-2`}>{item.title}</span>
+        <span css={xw`ml-2 capitalize`}>{item.title}</span>
       </a>
     </li>
   );
