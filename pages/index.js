@@ -1,13 +1,14 @@
-import firebase from '@/lib/firebase';
+import firebase from "@/lib/firebase";
 
-import { useForm } from 'react-hook-form';
-import xw from 'xwind';
-import Link from 'next/link';
+import { useForm } from "react-hook-form";
+import xw from "xwind";
+import Link from "next/link";
 
-import ButtonReact from '../components/ButtonReact';
-import ButtonStyled from '../components/ButtonStyled';
+import ButtonReact from "../components/ButtonReact";
+import ButtonStyled from "../components/ButtonStyled";
 
-import { createTest } from '@/lib/db';
+import { createTest } from "@/lib/db";
+import NavigationContainer from "@/components/nav/Index.component";
 
 const firestore = firebase.firestore();
 
@@ -18,9 +19,9 @@ const firestore = firebase.firestore();
 //   </div>
 // </div>
 const Index = ({ data }) => {
-  console.log(data);
   return (
     <div css={xw`container mx-auto text-blue-500`}>
+      <NavigationContainer />
       <Link href="/register">
         <a css={xw`m-11 underline cursor-pointer`}>To Register</a>
       </Link>
@@ -36,11 +37,10 @@ const Index = ({ data }) => {
 };
 export const getStaticProps = async (ctx) => {
   let getAllData = [];
-  const res = await firestore.collection('users').get();
+  const res = await firestore.collection("users").get();
   res.forEach((doc) => {
     getAllData.push(doc.data());
   });
-  console.log(getAllData);
   return {
     props: {
       data: getAllData,
