@@ -1,14 +1,14 @@
-import Head from 'next/head'
-import { Global } from '@emotion/react'
-import xw from 'xwind'
+import Head from "next/head";
+import { Global } from "@emotion/react";
+import xw from "xwind";
 
-import '../styles/base.css'
+import "../styles/base.css";
 
 function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Tailwindcss Emotion Example</title>
+        <title>Blossoming Bodhi</title>
       </Head>
       <Global
         //keyframes + ring and shadow classes variables  ... to global styles
@@ -16,7 +16,7 @@ function App({ Component, pageProps }) {
       />
       <Component {...pageProps} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
