@@ -28,7 +28,7 @@ const SidebarContainer = () => {
   ];
   return (
     <nav
-      css={xw`flex flex-col bg-gray-800 w-1/6 h-screen px-4 text-gray-900 fixed overflow-auto`}
+      css={xw`flex flex-col bg-gray-800 w-1/7 h-screen px-4 text-gray-900 fixed overflow-auto`}
     >
       <div css={xw`flex flex-wrap mt-8`}>
         <div css={xw`w-1/2`}>
