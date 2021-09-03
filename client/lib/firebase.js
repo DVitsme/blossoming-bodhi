@@ -27,30 +27,18 @@ const firebase = initializeApp(firebaseConfig);
 // handle auth
 const auth = getAuth(firebase);
 const authSignUpEmail = async ({ email, password, name }) => {
-  try {
-    const user = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(auth.currentUser, { displayName: name });
-    return user;
-  } catch (err) {
-    console.log(`Error: Create User Email Creds: ${err}`);
-  }
+  const user = await createUserWithEmailAndPassword(auth, email, password);
+  await updateProfile(auth.currentUser, { displayName: name });
+  return user;
 };
 
 const authSignInEmail = async (email, password) => {
-  try {
-    const user = await signInWithEmailAndPassword(auth, email, password);
-    return user;
-  } catch (err) {
-    console.log(`Error: Create User Email Creds: ${err}`);
-  }
+  const user = await signInWithEmailAndPassword(auth, email, password);
+  return user;
 };
 const authSignInGooglePopup = async () => {
-  try {
-    const user = await signInWithPopup(auth, new GoogleAuthProvider());
-    return user;
-  } catch (err) {
-    console.log(`Error: Create User Google Creds: ${err}`);
-  }
+  const user = await signInWithPopup(auth, new GoogleAuthProvider());
+  return user;
 };
 
 const authSignOut = async () => await signOut(auth);

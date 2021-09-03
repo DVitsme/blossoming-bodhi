@@ -6,14 +6,17 @@ import Footer from '../components/Footer';
 
 import 'tailwindcss/tailwind.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { FirebaseAuthState } from '../context/FirebaseAuthState';
 
 function MyApp({ Component, pageProps }) {
   return (
     <Provider>
-      <Navigation />
-      <ToastContainer />
-      <Component {...pageProps} />
-      <Footer />
+      <FirebaseAuthState>
+        <Navigation />
+        <ToastContainer />
+        <Component {...pageProps} />
+        <Footer />
+      </FirebaseAuthState>
     </Provider>
   );
 }

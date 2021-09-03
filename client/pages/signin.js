@@ -1,18 +1,19 @@
 import { useState, useContext } from 'react';
 import Link from 'next/link';
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 import {
   RiFacebookCircleFill,
   RiGoogleFill,
   RiTwitterFill
 } from 'react-icons/ri';
 
-import { authSignInEmail, firebase } from '../lib/firebase';
+import { authSignInEmail } from '../lib/firebase';
 import { Context } from '../context';
 import { handleLogInSocial } from '../utils/handleLogInSocial';
 
 export default function SignIn() {
-  const router = useRouter()
+  const router = useRouter();
   const { state } = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,11 +21,24 @@ export default function SignIn() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const logInUser = await authSignInEmail(email, password);
-      console.log(logInUser);
+      const logedIn = await authSignInEmail(email, password);
+      toast.success(`Welcome Back ${logedIn.user.displayName}`);
       router.push('/');
     } catch (err) {
       console.error(`Error Login Email - ${err}`);
+      toast.error(err.message);
+    }
+  };
+
+  const handleLogInSocialIcon = async (type) => {
+    try {
+      const logedIn = await handleLogInSocial(type);
+      router.push('/');
+      console.log('handleloginsocialicon shit', logedIn);
+      toast.success(`Welcome Back ${logedIn.user.displayName}`);
+    } catch (err) {
+      console.error(`Error Login Google - ${err}`);
+      toast.error(err.message);
     }
   };
 
@@ -143,7 +157,7 @@ export default function SignIn() {
             </div>
 
             <div className="mt-6 grid grid-cols-3 gap-3">
-              <div onClick={() => handleLogInSocial('facebook')}>
+              <div onClick={() => handleLogInSocialIcon('facebook')}>
                 <a className="w-full inline-flex cursor-pointer justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                   <span className="sr-only">Sign in with Facebook</span>
                   <RiFacebookCircleFill
@@ -154,7 +168,7 @@ export default function SignIn() {
                 </a>
               </div>
 
-              <div onClick={() => handleLogInSocial('twitter')}>
+              <div onClick={() => handleLogInSocialIcon('twitter')}>
                 <a
                   href="#"
                   className="w-full inline-flex cursor-pointer justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
@@ -168,7 +182,7 @@ export default function SignIn() {
                 </a>
               </div>
 
-              <div onClick={() => handleLogInSocial('google')}>
+              <div onClick={() => handleLogInSocialIcon('google')}>
                 <a className="w-full inline-flex cursor-pointer justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                   <span className="sr-only">Sign in with Google</span>
                   <RiGoogleFill

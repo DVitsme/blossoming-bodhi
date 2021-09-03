@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 import {
   RiFacebookCircleFill,
   RiGoogleFill,
   RiTwitterFill
 } from 'react-icons/ri';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 import { handleLogInSocial } from '../utils/handleLogInSocial';
-import { firebase, authSignUpEmail } from '../lib/firebase';
+import { authSignUpEmail } from '../lib/firebase';
 
 export default function SignUp() {
   const router = useRouter();
@@ -19,12 +18,11 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ name, email, password });
     const user = { name, email, password };
     try {
       const createdUser = await authSignUpEmail(user);
-      toast.success(`Welcome`);
       console.log('sign up', createdUser);
+      toast.success(`Welcome`);
       router.push('/');
     } catch (err) {
       toast.error(err.message);
