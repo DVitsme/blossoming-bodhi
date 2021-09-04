@@ -8,9 +8,7 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 8000;
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useCreateIndex: true
-  })
+  .connect(process.env.MONGO_URI)
   .then(() => console.log('DB connected'))
   .catch((err) => console.log('DB error:', err));
 

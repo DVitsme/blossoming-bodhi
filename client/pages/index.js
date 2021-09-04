@@ -16,9 +16,9 @@ export default function Home() {
       </Head>
 
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1>Hi there</h1>
-
-        <button onClick={() => authSignOut()}>Sign Out</button>
+        <h1 className="capitalize">
+          {state.user ? `Hello ${state.user.name}` : 'Welcome Please Log in'}
+        </h1>
       </main>
     </div>
   );

@@ -43,7 +43,7 @@ const SignedIn = ({ user }) => {
         </div>
         <div className="ml-3">
           <div className="text-base font-medium text-gray-800 capitalize">
-            {user.displayName}
+            {user.name}
           </div>
           <div className="text-sm font-medium text-gray-500">{user.email}</div>
         </div>
@@ -58,7 +58,7 @@ const SignedIn = ({ user }) => {
       <div className="mt-3 space-y-1">
         <a
           onClick={() => authSignOut()}
-          className="w-full flex items-center justify-center mt-4 px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+          className="w-full flex items-center cursor-pointer justify-center mt-4 px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
         >
           Sign out
         </a>

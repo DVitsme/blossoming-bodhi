@@ -34,7 +34,6 @@ export default function SignIn() {
     try {
       const logedIn = await handleLogInSocial(type);
       router.push('/');
-      console.log('handleloginsocialicon shit', logedIn);
       toast.success(`Welcome Back ${logedIn.user.displayName}`);
     } catch (err) {
       console.error(`Error Login Google - ${err}`);
