@@ -6,7 +6,6 @@ import { auth, authSignOut } from '../lib/firebase';
 
 export default function Home() {
   const { state } = useContext(Context);
-  console.log(state);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
