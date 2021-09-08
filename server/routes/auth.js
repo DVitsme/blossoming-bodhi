@@ -1,10 +1,9 @@
 import express from 'express';
-import { register } from '../controllers/auth';
-import { currentUser } from '../controllers/currentUser';
+import { currentUser, privateRoute } from '../controllers/auth';
 
 const router = express.Router();
 
-router.get('/register', register);
 router.post('/current-user', currentUser);
+router.get('/private-route', privateRoute);
 
 module.exports = router;
