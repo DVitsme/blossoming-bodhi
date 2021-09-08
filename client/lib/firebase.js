@@ -41,7 +41,12 @@ const authSignInGooglePopup = async () => {
   return user;
 };
 
-const authSignOut = async () => await signOut(auth);
+const authSignOut = async (dispatch) => {
+  await signOut(auth);
+  dispatch({
+    type: 'LOGOUT'
+  });
+};
 
 export {
   firebase,
