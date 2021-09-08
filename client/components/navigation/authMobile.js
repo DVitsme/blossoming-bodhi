@@ -4,7 +4,7 @@ import { BellIcon, UserCircleIcon } from '@heroicons/react/outline';
 import { authSignOut } from '../../lib/firebase';
 
 const AuthMobile = () => {
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   if (state.user) {
     return <SignedIn user={state.user} />;
   }
@@ -57,7 +57,7 @@ const SignedIn = ({ user }) => {
       </div>
       <div className="mt-3 space-y-1">
         <a
-          onClick={() => authSignOut()}
+          onClick={() => authSignOut(dispatch)}
           className="w-full flex items-center cursor-pointer justify-center mt-4 px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
         >
           Sign out

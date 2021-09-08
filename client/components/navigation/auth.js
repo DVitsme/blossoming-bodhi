@@ -1,5 +1,6 @@
 import { Fragment, useContext } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import {
@@ -17,9 +18,9 @@ function classNames(...classes) {
 }
 
 const NavigationAuth = () => {
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   if (state.user) {
-    return <SignedIn user={state.user} />;
+    return <SignedIn user={state.user} dispatch={dispatch} />;
   }
   return (
     <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
@@ -39,7 +40,8 @@ const NavigationAuth = () => {
 
 export default NavigationAuth;
 
-const SignedIn = ({ user }) => {
+const SignedIn = ({ user, dispatch }) => {
+  const router = useRouter();
   return (
     <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
       <div className="flex-shrink-0">
@@ -64,10 +66,10 @@ const SignedIn = ({ user }) => {
           <div>
             <Menu.Button className="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               <span className="sr-only">Open user menu</span>
-              {user.photoURL ? (
+              {user.picture ? (
                 <img
                   className="h-8 w-8 rounded-full"
-                  src={user.photoURL}
+                  src={user.picture}
                   alt=""
                 />
               ) : (
@@ -114,10 +116,13 @@ const SignedIn = ({ user }) => {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    onClick={() => authSignOut()}
+                    onClick={() => {
+                      authSignOut(dispatch);
+                      router.push('/signin');
+                    }}
                     className={classNames(
                       active ? 'bg-gray-100' : '',
-                      'block px-4 py-2 text-sm text-gray-700'
+                      'block px-4 py-2 text-sm text-gray-700 cursor-pointer'
                     )}
                   >
                     Sign out
