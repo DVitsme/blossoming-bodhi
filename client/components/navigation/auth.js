@@ -45,12 +45,20 @@ const SignedIn = ({ user, dispatch }) => {
   return (
     <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
       <div className="flex-shrink-0">
-        <button
-          type="button"
-          className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        <Link
+          href={{
+            pathname: '/dashboard'
+          }}
         >
-          <span>To Dashboard</span>
-        </button>
+          <a>
+            <button
+              type="button"
+              className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              <span>To Dashboard</span>
+            </button>
+          </a>
+        </Link>
       </div>
       <div className="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
         <button

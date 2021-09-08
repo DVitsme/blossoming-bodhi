@@ -4,6 +4,7 @@ import React, { useEffect, useContext } from 'react';
 import { Context } from '.';
 import { axiosAuth } from '../actions/axios';
 import { firebase, auth } from '../lib/firebase';
+import { setCookie, destroyCookie } from 'nookies';
 
 export const FirebaseAuthState = ({ children }) => {
   const { dispatch } = useContext(Context);
@@ -11,7 +12,11 @@ export const FirebaseAuthState = ({ children }) => {
   useEffect(() => {
     return onAuthStateChanged(auth, async (user) => {
       if (user) {
+        // set token to cookie
         const { token } = await user.getIdTokenResult();
+        destroyCookie(null, 'token'); // kill the last token
+        setCookie(null, 'token', token, {}); // create a new cookie with new token - order is {context, name, value, options}
+
         // see ../actions/axios to endpoints and headers being set
         const res = await axiosAuth.post('/current-user', {
           /* empty req.body */
@@ -26,6 +31,8 @@ export const FirebaseAuthState = ({ children }) => {
         dispatch({
           type: 'LOGOUT'
         });
+        destroyCookie(null, 'token');
+        setCookie(null, 'token', '', {});
       }
     });
   }, []);
