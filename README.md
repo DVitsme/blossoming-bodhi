@@ -1,4 +1,29 @@
 # To Fix List
+>All done... for now
 
-> on signup adding "name" field to firebase takes time to fire, while that is happening the newly created user is added to db without name firing off a required name error. 
-> the db is then updated after the name field is added to the firebase field. my short-term answer was to remove required from name to get around the error but is a bad strat. The db should not move to save until the object is completed.
+# To Do
+>Meeting Notes
+Yoga Poses user did 
+homework
+
+
+>Account
+Birthdays(promot uses after making an account to enter their birthday)
+reminder for upcomming events
+Signed Waviers
+
+
+>Calender
+Save google calendar events and combine with outlook dates for no overlap
+book appoinments
+block off times not avaiable
+
+>Follow up
+Reminder for upcomming events
+If you are sending docs to remind people after events
+- ex. if you are feeling any pain or stiffness after 24 hours please send use this form 
+
+>Forms
+Waiver (with e-sig)
+
+
