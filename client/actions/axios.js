@@ -20,6 +20,7 @@ axiosAuth.interceptors.request.use(
     }
   },
   (err) => {
+    console.log('actions/axios err', err);
     return Promise.reject(err);
   }
 );

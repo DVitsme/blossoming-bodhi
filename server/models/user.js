@@ -5,7 +5,8 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      trim: true
+      trim: true,
+      required: true
     },
     email: {
       type: String,
@@ -20,6 +21,9 @@ const userSchema = new Schema(
       type: [String],
       default: ['Student'],
       enum: ['Student', 'Instructor', 'Admin']
+    },
+    birthday: {
+      type: String
     },
     stripe_account_id: '',
     stripe_seller: '',

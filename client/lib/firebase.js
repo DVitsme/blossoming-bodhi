@@ -31,6 +31,14 @@ const auth = getAuth(firebase);
 const authSignUpEmail = async ({ email, password, name }) => {
   const user = await createUserWithEmailAndPassword(auth, email, password);
   await updateProfile(auth.currentUser, { displayName: name });
+  // return await updateProfile(auth.currentUser, { displayName: name })
+  //   .then((returnedUser) => {
+  //     console.log('lib/firebase.js', returnedUser);
+  //     return user;
+  //   })
+  //   .catch((err) => {
+  //     console.error('lib/firebase.js', err);
+  //   });
   return user;
 };
 

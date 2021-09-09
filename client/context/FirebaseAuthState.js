@@ -14,6 +14,8 @@ export const FirebaseAuthState = ({ children }) => {
       if (user) {
         // set token to cookie
         const { token } = await user.getIdTokenResult();
+        // console.log('onAuthStateChange User', user);
+        // console.log('onAuthStateChange token', token);
         destroyCookie(null, 'token'); // kill the last token
         setCookie(null, 'token', token, {}); // create a new cookie with new token - order is {context, name, value, options}
 

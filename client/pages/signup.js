@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import {
@@ -6,6 +6,7 @@ import {
   RiGoogleFill,
   RiTwitterFill
 } from 'react-icons/ri';
+import Loader from 'react-loader-spinner';
 
 import { handleLogInSocial } from '../utils/handleLogInSocial';
 import { authSignUpEmail } from '../lib/firebase';
@@ -15,6 +16,7 @@ export default function SignUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,8 +24,12 @@ export default function SignUp() {
     try {
       const createdUser = await authSignUpEmail(user);
       console.log('sign up', createdUser);
-      toast.success(`Welcome`);
-      router.push('/');
+      setLoading(true);
+      if (!!createdUser.user.displayName) {
+        setLoading(false);
+        toast.success(`Welcome ${createdUser.user.displayName}`);
+        router.push('/');
+      }
     } catch (err) {
       toast.error(err.message);
       console.log(`Sign Up error - Email: ${err}`);
@@ -109,7 +115,7 @@ export default function SignUp() {
 
             {/* Log in Form */}
             <div className="mt-6">
-              <form onSubmit={handleSubmit} method="POST" className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label
                     htmlFor="name"
@@ -203,8 +209,18 @@ export default function SignUp() {
                   <button
                     type="submit"
                     className="w-full flex justify-center py-2 px-4 border border-transparent mb-16 rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    disabled={loading}
                   >
-                    Sign Up
+                    {loading ? (
+                      <Loader
+                        type="ThreeDots"
+                        color="#FFF"
+                        height={30}
+                        width={30}
+                      />
+                    ) : (
+                      'Sign Up '
+                    )}
                   </button>
                 </div>
               </form>
