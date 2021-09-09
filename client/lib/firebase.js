@@ -7,7 +7,8 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -26,6 +27,7 @@ const firebase = initializeApp(firebaseConfig);
 
 // handle auth
 const auth = getAuth(firebase);
+
 const authSignUpEmail = async ({ email, password, name }) => {
   const user = await createUserWithEmailAndPassword(auth, email, password);
   await updateProfile(auth.currentUser, { displayName: name });
@@ -41,6 +43,15 @@ const authSignInGooglePopup = async () => {
   return user;
 };
 
+const authHandlePasswordReset = async (email, config) => {
+  try {
+    return await sendPasswordResetEmail(auth, email, config);
+  } catch (err) {
+    console.log(`firebase authHandlePasswordReset err: ${err}`);
+    return err;
+  }
+};
+
 const authSignOut = async (dispatch) => {
   await signOut(auth);
   dispatch({
@@ -54,5 +65,6 @@ export {
   authSignInGooglePopup,
   authSignInEmail,
   authSignUpEmail,
-  authSignOut
+  authSignOut,
+  authHandlePasswordReset
 };

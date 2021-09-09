@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
@@ -124,12 +124,11 @@ export default function SignIn() {
               </div>
 
               <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot your password?
-                </a>
+                <Link href="/reset-password">
+                  <a className="font-medium text-indigo-600 hover:text-indigo-500">
+                    Forgot your password?
+                  </a>
+                </Link>
               </div>
             </div>
 
