@@ -1,5 +1,4 @@
-import { parseCookies } from 'nookies';
-import axios from 'axios';
+import { authCheck } from '../../utils/authCheck';
 
 const Dashboard = () => {
   return (
@@ -11,22 +10,19 @@ const Dashboard = () => {
 
 export async function getServerSideProps(context) {
   try {
-    const cookies = parseCookies(context);
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER_URI}/private-route`,
-      {
-        headers: {
-          token: cookies.token
-        }
-      }
-    );
-    console.log('private route props', res.data);
+    const data = await authCheck(context);
+    if (data.activeUser) {
+      return { props: {} };
+    }
   } catch (err) {
-    console.log('dashboard build err:', err);
+    return {
+      redirect: {
+        destination: '/signin',
+        permanent: false
+      },
+      props: {}
+    };
   }
-  return {
-    props: {}
-  };
 }
 
 export default Dashboard;
