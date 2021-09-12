@@ -27,3 +27,5 @@ If you are sending docs to remind people after events
 Waiver (with e-sig)
 
 
+## Would be cool
+Lets do something with spotify api
