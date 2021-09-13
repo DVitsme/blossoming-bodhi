@@ -28,7 +28,7 @@ export default function SignUp() {
       if (!!createdUser.user.displayName) {
         setLoading(false);
         toast.success(`Welcome ${createdUser.user.displayName}`);
-        router.push('/');
+        router.push('/dashboard');
       }
     } catch (err) {
       toast.error(err.message);

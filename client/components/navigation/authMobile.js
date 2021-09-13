@@ -57,7 +57,10 @@ const SignedIn = ({ user }) => {
       </div>
       <div className="mt-3 space-y-1">
         <a
-          onClick={() => authSignOut(dispatch)}
+          onClick={() => {
+            authSignOut(dispatch);
+            router.push('/signin');
+          }}
           className="w-full flex items-center cursor-pointer justify-center mt-4 px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
         >
           Sign out

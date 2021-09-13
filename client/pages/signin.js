@@ -23,7 +23,7 @@ export default function SignIn() {
     try {
       const logedIn = await authSignInEmail(email, password);
       toast.success(`Welcome Back ${logedIn.user.displayName}`);
-      router.push('/');
+      router.push('/dashboard');
     } catch (err) {
       console.error(`Error Login Email - ${err}`);
       toast.error(err.message);
@@ -33,8 +33,9 @@ export default function SignIn() {
   const handleLogInSocialIcon = async (type) => {
     try {
       const logedIn = await handleLogInSocial(type);
-      router.push('/');
+      console.log(state);
       toast.success(`Welcome Back ${logedIn.user.displayName}`);
+      router.push('/dashboard');
     } catch (err) {
       console.error(`Error Login Google - ${err}`);
       toast.error(err.message);

@@ -9,14 +9,15 @@ import User from '../models/user';
 
 export const findOrCreateUser = async (req, res, next) => {
   // take user from firebase auth and check to see if it is in db by email
-  const { token } = req.headers;
-  const firebaseUser = await admin.auth().verifyIdToken(token);
-  const completeUserProfile = await admin.auth().getUser(firebaseUser.uid);
-  const { displayName, email, photoURL } = completeUserProfile.providerData[0];
-  // console.log(`completeUserProfile:`, displayName, email, photoURL);
-  const user = await User.findOne({ email });
-
   try {
+    const { token } = req.headers;
+    const firebaseUser = await admin.auth().verifyIdToken(token);
+    const completeUserProfile = await admin.auth().getUser(firebaseUser.uid);
+    const { displayName, email, photoURL } =
+      completeUserProfile.providerData[0];
+    // console.log(`completeUserProfile:`, displayName, email, photoURL);
+    const user = await User.findOne({ email });
+
     if (user) {
       // send back the user
       req.currentUser = user;
