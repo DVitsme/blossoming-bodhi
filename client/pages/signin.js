@@ -18,6 +18,12 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    if (router.query.err) {
+      toast.error(router.query.err);
+    }
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
