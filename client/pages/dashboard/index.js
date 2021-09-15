@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import {
   FireIcon,
   HomeIcon,
   TrendingUpIcon,
+  ShoppingBagIcon,
   UserGroupIcon
 } from '@heroicons/react/outline';
 
@@ -12,12 +14,18 @@ import Events from '../../components/dashboard/events/index';
 import { authCheck } from '../../utils/authCheck';
 
 const Dashboard = () => {
+  const [section, setSection] = useState('Home');
   return (
     <div className="relative min-h-screen bg-gray-100">
       <div className="py-10">
         <div className="max-w-full mx-auto sm:px-6 lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8">
-          <SideBarNav navigation={navigation} communities={communities} />
-          <MainCenter tabs={tabs} questions={questions} />
+          <SideBarNav
+            navigation={navigation}
+            communities={communities}
+            section={section}
+            setSection={setSection}
+          />
+          <MainCenter tabs={tabs} questions={questions} section={section} />
           <Events trendingPosts={trendingPosts} whoToFollow={whoToFollow} />
         </div>
       </div>
@@ -34,7 +42,7 @@ export async function getServerSideProps(context) {
   } catch (err) {
     return {
       redirect: {
-        destination: '/signin',
+        destination: '/signin?err=Please+login+to+continue',
         permanent: false
       },
       props: {}
@@ -45,10 +53,11 @@ export async function getServerSideProps(context) {
 export default Dashboard;
 
 const navigation = [
-  { name: 'Home', href: '#', icon: HomeIcon, current: true },
-  { name: 'Popular', href: '#', icon: FireIcon, current: false },
-  { name: 'Communities', href: '#', icon: UserGroupIcon, current: false },
-  { name: 'Trending', href: '#', icon: TrendingUpIcon, current: false }
+  { name: 'Home', href: '#', icon: HomeIcon },
+  { name: 'Classes', href: '#', icon: FireIcon },
+  { name: 'Products', href: '#', icon: ShoppingBagIcon },
+  { name: 'Workshops', href: '#', icon: TrendingUpIcon },
+  { name: 'Communities', href: '#', icon: UserGroupIcon }
 ];
 
 const communities = [

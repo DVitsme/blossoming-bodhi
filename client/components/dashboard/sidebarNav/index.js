@@ -1,6 +1,12 @@
-import { classNames } from '../../../utils/classNames';
+import { useContext } from 'react';
 
-const SideBarNav = ({ navigation, communities }) => {
+import { Context } from '../../../context';
+import { classNames } from '../../../utils/classNames';
+import Link from 'next/link';
+
+const SideBarNav = ({ navigation, communities, setSection, section }) => {
+  const { state } = useContext(Context);
+
   return (
     <div className="hidden lg:block lg:col-span-3 xl:col-span-2">
       <nav
@@ -8,21 +14,35 @@ const SideBarNav = ({ navigation, communities }) => {
         className="sticky top-4 divide-y divide-gray-300"
       >
         <div className="pb-8 space-y-1">
+          {state?.user?.role[0] === 'Student' ? (
+            <div className="mb-6 ">
+              <div className="relative w-full block cursor-pointer text-center px-4 py-2 mb-2 border border-transparent text-sm font-bold rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <span>Create Course</span>
+              </div>
+              <Link href="/dashboard/become-instructor">
+                <a className="relative w-full block cursor-pointer text-center px-4 py-2 border border-transparent text-sm font-bold rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  Manage Users
+                </a>
+              </Link>
+            </div>
+          ) : (
+            'I dont exist'
+          )}
           {navigation.map((item) => (
             <a
               key={item.name}
-              href={item.href}
+              onClick={() => setSection(item.name)}
               className={classNames(
-                item.current
+                item.name === section
                   ? 'bg-gray-200 text-gray-900'
                   : 'text-gray-600 hover:bg-gray-50',
-                'group flex items-center px-3 py-2 text-sm font-medium rounded-md'
+                'group flex items-center cursor-pointer px-3 py-2 text-sm font-medium rounded-md'
               )}
-              aria-current={item.current ? 'page' : undefined}
+              aria-current={item.name === section ? 'page' : undefined}
             >
               <item.icon
                 className={classNames(
-                  item.current
+                  item.name === section
                     ? 'text-gray-500'
                     : 'text-gray-400 group-hover:text-gray-500',
                   'flex-shrink-0 -ml-1 mr-3 h-6 w-6'
@@ -47,7 +67,6 @@ const SideBarNav = ({ navigation, communities }) => {
             {communities.map((community) => (
               <a
                 key={community.name}
-                href={community.href}
                 className="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"
               >
                 <span className="truncate">{community.name}</span>

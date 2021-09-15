@@ -19,6 +19,7 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
+    // query example: /signin?err=Im+a+test
     if (router.query.err) {
       toast.error(router.query.err);
     }

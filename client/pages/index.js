@@ -1,24 +1,31 @@
 import { useContext } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 
 import { Context } from '../context';
 import { auth, authSignOut } from '../lib/firebase';
+import HeroVideo from '../components/Hero/heroVideo';
+import AlternatingFeatures from '../components/feature/alternatingFeatures';
+import AboutPreview from '../components/testimonial/aboutPreview';
+import FourByTwoGrid from '../components/feature/fourByTwoGrid';
+import AboutStats from '../components/feature/stats';
+import InlineSignUp from '../components/cta/inlineSignUp';
 
 export default function Home() {
   const { state } = useContext(Context);
   console.log('im from the index', state);
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <main>
       <Head>
-        <title>Create Next App</title>
+        <title>Blossoming Bodhi</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="capitalize">
-          {state.user ? `Hello ${state.user.name}` : 'Welcome Please Log in'}
-        </h1>
-      </main>
-    </div>
+      <HeroVideo />
+      <AlternatingFeatures />
+      <FourByTwoGrid />
+      <AboutStats />
+      <InlineSignUp />
+    </main>
   );
 }
