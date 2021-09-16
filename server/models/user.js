@@ -26,7 +26,7 @@ const userSchema = new Schema(
       type: String
     },
     stripe_account_id: '',
-    stripe_seller: '',
+    stripe_seller: {},
     stripeSession: {}
   },
   { timestamps: true }
