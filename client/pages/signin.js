@@ -17,7 +17,16 @@ export default function SignIn() {
   const { state } = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  /*
+   * THIS SUCKS i would rather redirect on the server CHANGE ME!!
+   * also use effect sucks cause state.user === null on render
+   */
+  if (state.user !== null) {
+    router.push('/dashboard');
+  }
+  /*
+   * THIS SUCKS i would rather redirect on the sever CHANGE ME!!
+   */
   useEffect(() => {
     // query example: /signin?err=Im+a+test
     if (router.query.err) {

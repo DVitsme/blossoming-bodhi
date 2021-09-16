@@ -1,8 +1,25 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Context } from '../../context';
+import { authCheck } from '../../utils/authCheck';
+import Link from 'next/link';
+import { toast } from 'react-toastify';
+import { axiosAuth } from '../../actions/axios';
 
 export default function BecomeInstructor() {
+  const [loading, setLoading] = useState(false);
   const { state } = useContext(Context);
+
+  const becomeInstructor = async () => {
+    try {
+      setLoading(true);
+      const data = await axiosAuth.post('/make-instructor');
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+      toast.error('Stripe Failed. Try again');
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="bg-gray-50">
@@ -11,7 +28,12 @@ export default function BecomeInstructor() {
           <div className="grid grid-cols-1 items-center gap-y-10 gap-x-16 lg:grid-cols-2">
             <div>
               <h2 className="text-4xl font-extrabold tracking-tight text-gray-900">
-                We built our business on great customer service
+                <span className="capitalize">
+                  Come teach with us! <br />
+                </span>
+                <span className="font-bold">
+                  Become an instructor and change lives — including your own
+                </span>
               </h2>
               <p className="mt-4 text-gray-500">
                 At the beginning at least, but then we realized we could make a
@@ -20,10 +42,16 @@ export default function BecomeInstructor() {
                 the headlines, then clarify in the small print but hope people
                 don't actually read it.
               </p>
+              <a
+                onClick={() => becomeInstructor()}
+                className="inline-flex mt-5 items-center justify-center px-5 py-3 border-none text-base bg-blue-500 font-medium rounded-md text-white hover:bg-blue-700 hover:text-white"
+              >
+                Become a teacher
+              </a>
             </div>
             <div className="aspect-w-3 aspect-h-2 bg-gray-100 rounded-lg overflow-hidden">
               <img
-                src="https://tailwindui.com/img/ecommerce-images/incentives-07-hero.jpg"
+                src="/images/gifs/yoga/peace_and_calm.gif"
                 alt=""
                 className="object-center object-cover"
               />
@@ -59,6 +87,7 @@ export async function getServerSideProps(context) {
       return { props: {} };
     }
   } catch (err) {
+    console.log(err);
     return {
       redirect: {
         destination: '/signin?err=Please+login+to+continue',
@@ -70,24 +99,24 @@ export async function getServerSideProps(context) {
 }
 const incentives = [
   {
-    name: 'Free shipping',
+    name: 'Teach your way',
     imageSrc:
       'https://tailwindui.com/img/ecommerce/icons/icon-shipping-simple.svg',
     description:
-      "It's not actually free we just price it into the products. Someone's paying for it, and it's not us."
+      'Publish the course you want, in the way you want, and always have of control your own content.'
   },
   {
-    name: '10-year warranty',
+    name: 'Inspire Learners',
     imageSrc:
       'https://tailwindui.com/img/ecommerce/icons/icon-warranty-simple.svg',
     description:
-      "If it breaks in the first 10 years we'll replace it. After that you're on your own though."
+      'Teach what you know and help learners explore their interests, gain new skills, and advance their careers.'
   },
   {
-    name: 'Exchanges',
+    name: 'Get Rewarded',
     imageSrc:
       'https://tailwindui.com/img/ecommerce/icons/icon-exchange-simple.svg',
     description:
-      "If you don't like it, trade it to one of your friends for something of theirs. Don't send it here though."
+      'Expand your professional network, build your expertise, and earn money on each paid enrollment.'
   }
 ];
