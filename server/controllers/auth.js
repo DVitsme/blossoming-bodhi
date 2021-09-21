@@ -1,6 +1,3 @@
-import admin from '../firebase/index';
-import User from '../models/user';
-
 export const currentUser = async (req, res) => {
   res.json(req.currentUser);
 };

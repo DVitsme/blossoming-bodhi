@@ -12,8 +12,9 @@ export default function BecomeInstructor() {
   const becomeInstructor = async () => {
     try {
       setLoading(true);
-      const data = await axiosAuth.post('/make-instructor');
-      console.log(data);
+      const res = await axiosAuth.post('/make-instructor');
+      // stripe will send back a link for users to complete creating their profile
+      window.location.href = await res.data;
     } catch (err) {
       console.log(err);
       toast.error('Stripe Failed. Try again');
@@ -44,9 +45,12 @@ export default function BecomeInstructor() {
               </p>
               <a
                 onClick={() => becomeInstructor()}
-                className="inline-flex mt-5 items-center justify-center px-5 py-3 border-none text-base bg-blue-500 font-medium rounded-md text-white hover:bg-blue-700 hover:text-white"
+                disabled={loading}
+                className={`inline-flex mt-5 items-center cursor-pointer justify-center px-5 py-3 border-none text-base font-medium rounded-md text-white hover:text-white ${
+                  loading ? 'bg-red-700' : 'bg-blue-500 hover:bg-blue-700'
+                }`}
               >
-                Become a teacher
+                {loading ? 'loading' : 'Become a teacher'}
               </a>
             </div>
             <div className="aspect-w-3 aspect-h-2 bg-gray-100 rounded-lg overflow-hidden">
