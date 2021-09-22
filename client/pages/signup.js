@@ -6,10 +6,10 @@ import {
   RiGoogleFill,
   RiTwitterFill
 } from 'react-icons/ri';
-import Loader from 'react-loader-spinner';
 
 import { handleLogInSocial } from '../utils/handleLogInSocial';
 import { authSignUpEmail } from '../lib/firebase';
+import Loading from '../utils/loading';
 
 export default function SignUp() {
   const router = useRouter();
@@ -208,16 +208,11 @@ export default function SignUp() {
                 <div>
                   <button
                     type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent mb-16 rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="w-full flex justify-center py-2 px-4 border bord<er-transparent mb-16 rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     disabled={loading}
                   >
                     {loading ? (
-                      <Loader
-                        type="ThreeDots"
-                        color="#FFF"
-                        height={30}
-                        width={30}
-                      />
+                      <Loading color="#FFF" height={30} width={30} />
                     ) : (
                       'Sign Up '
                     )}

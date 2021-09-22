@@ -11,12 +11,14 @@ import {
 import { authSignInEmail } from '../lib/firebase';
 import { Context } from '../context';
 import { handleLogInSocial } from '../utils/handleLogInSocial';
+import Loading from '../utils/loading';
 
 export default function SignIn() {
   const router = useRouter();
   const { state } = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   /*
    * THIS SUCKS i would rather redirect on the server CHANGE ME!!
    * also use effect sucks cause state.user === null on render
@@ -36,12 +38,15 @@ export default function SignIn() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const logedIn = await authSignInEmail(email, password);
       toast.success(`Welcome Back ${logedIn.user.displayName}`);
+      setLoading(false);
       router.push('/dashboard');
     } catch (err) {
       console.error(`Error Login Email - ${err}`);
+      setLoading(false);
       toast.error(err.message);
     }
   };
@@ -153,8 +158,13 @@ export default function SignIn() {
               <button
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                disabled={loading}
               >
-                Sign in
+                {loading ? (
+                  <Loading color="#FFF" height={30} width={30} />
+                ) : (
+                  'Sign in'
+                )}
               </button>
             </div>
           </form>
