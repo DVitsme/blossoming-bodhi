@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FireIcon,
   HomeIcon,
@@ -6,6 +6,8 @@ import {
   ShoppingBagIcon,
   UserGroupIcon
 } from '@heroicons/react/outline';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 import SideBarNav from '../../components/dashboard/sidebarNav/index';
 import MainCenter from '../../components/dashboard/main/index';
@@ -15,6 +17,12 @@ import { authCheck } from '../../utils/authCheck';
 
 const Dashboard = () => {
   const [section, setSection] = useState('Home');
+  const router = useRouter();
+  const { query } = router;
+  useEffect(() => {
+    if (query.err) toast.error(query.err);
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-gray-100">
       <div className="py-10">

@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { Context } from '../../../context';
 import { classNames } from '../../../utils/classNames';
 import Link from 'next/link';
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react';
 
 const SideBarNav = ({ navigation, communities, setSection, section }) => {
   const { state } = useContext(Context);
@@ -14,20 +15,26 @@ const SideBarNav = ({ navigation, communities, setSection, section }) => {
         className="sticky top-4 divide-y divide-gray-300"
       >
         <div className="pb-8 space-y-1">
-          {state?.user?.role[0] === 'Student' ? (
+          {state?.user?.role.includes('Student') ? (
             <div className="mb-6 ">
               <div className="relative w-full block cursor-pointer text-center px-4 py-2 mb-2 border border-transparent text-sm font-bold rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 <span>Create Course</span>
               </div>
-              <Link href="/dashboard/become-instructor">
-                <a className="relative w-full block cursor-pointer text-center px-4 py-2 border border-transparent text-sm font-bold rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  Manage Users
-                </a>
-              </Link>
+              {state?.user?.role.includes('Instructor') ? (
+                <Link href="/dashboard/instructor">
+                  <a className="relative w-full block cursor-pointer capitalize text-center px-4 py-2 border border-transparent text-sm font-bold rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Manage Your Courses
+                  </a>
+                </Link>
+              ) : (
+                <Link href="/dashboard/become-instructor">
+                  <a className="relative w-full block cursor-pointer capitalize text-center px-4 py-2 border border-transparent text-sm font-bold rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    become an instructor
+                  </a>
+                </Link>
+              )}
             </div>
-          ) : (
-            'I dont exist'
-          )}
+          ) : null}
           {navigation.map((item) => (
             <a
               key={item.name}
