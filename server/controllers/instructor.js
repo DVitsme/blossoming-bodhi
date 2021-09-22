@@ -25,9 +25,33 @@ export const makeInstructor = async (req, res) => {
       'stripe_user[email]': user.email
     });
     res.send(`${accountLink.url}?${queryString.stringify(accountLink)}`);
-    // res.send(user);
   } catch (err) {
     console.log('Make Instructor Error:', err);
+    res.send(err);
+  }
+};
+
+export const getAccountStatus = async (req, res) => {
+  try {
+    const user = await User.findById(req.currentUser._id).exec();
+    const account = await Stripe.accounts.retrieve(user.stripe_account_id);
+
+    // account.charges_enabled ensures the user entered everything correctly
+    if (account.charges_enabled) {
+      const statusUpdated = await User.findByIdAndUpdate(
+        user._id,
+        {
+          stripe_seller: account,
+          $addToSet: { role: 'Instructor' } // $addToSet stops duplicates
+        },
+        { new: true }
+      ).exec();
+      res.json(statusUpdated);
+    } else {
+      return res.status(401).send('Unauthorized');
+    }
+  } catch (err) {
+    console.log('Get Account Status:', err);
     res.send(err);
   }
 };
