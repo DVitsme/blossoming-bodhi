@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { Context } from '../context';
 import { auth, authSignOut } from '../lib/firebase';
-import HeroVideo from '../components/Hero/heroVideo';
+import HeroVideo from '../components/hero/heroVideo';
 import AlternatingFeatures from '../components/feature/alternatingFeatures';
 import AboutPreview from '../components/testimonial/aboutPreview';
 import FourByTwoGrid from '../components/feature/fourByTwoGrid';
