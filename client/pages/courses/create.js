@@ -11,11 +11,12 @@ import { classNames } from '../../utils/classNames';
 
 const Create = () => {
   const [values, setValues] = useState({
-    name: '',
+    courseTitle: '',
+    category: '',
     description: '',
-    price: '999',
+    price: '9.99',
     uploading: false,
-    paid: true,
+    paid: false,
     loading: false,
     imagePreview: ''
   });
@@ -27,8 +28,13 @@ const Create = () => {
     setStep(index);
   };
 
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+  const handleChange = (e, section) => {
+    if (e.target) setValues({ ...values, [e.target.name]: e.target.value });
+    if (e === 'paid')
+      setValues((prevState) => ({
+        ...prevState,
+        paid: !values.paid
+      }));
   };
 
   const handleImage = () => {};
