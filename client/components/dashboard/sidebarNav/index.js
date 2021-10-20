@@ -18,7 +18,9 @@ const SideBarNav = ({ navigation, communities, setSection, section }) => {
           {state?.user?.role.includes('Student') ? (
             <div className="mb-6 ">
               <div className="relative w-full block cursor-pointer text-center px-4 py-2 mb-2 border border-transparent text-sm font-bold rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                <span>Create Course</span>
+                <Link href="/courses/create">
+                  <a>Create Course</a>
+                </Link>
               </div>
               {state?.user?.role.includes('Instructor') ? (
                 <Link href="/dashboard/instructor">

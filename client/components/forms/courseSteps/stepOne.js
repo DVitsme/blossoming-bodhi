@@ -2,8 +2,17 @@ import { useEffect } from 'react';
 import SelectCheckOnLeft from '../../select/checkOnLeft';
 
 import SwitchWithLabel from '../../styles/switch/switchWithLabel';
+import Loading from '../../../utils/loading';
 
-export const StepOne = ({ values, nextStep, handleChange, setValues }) => {
+export const StepOne = ({
+  values,
+  setValues,
+  preview,
+  setPreview,
+  nextStep,
+  handleChange,
+  handleImage
+}) => {
   const {
     courseTitle,
     description,
@@ -115,42 +124,67 @@ export const StepOne = ({ values, nextStep, handleChange, setValues }) => {
               <label className="block text-sm font-medium text-gray-700">
                 Cover photo
               </label>
-              <div className="mt-1 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center">
-                <div className="space-y-1 text-center">
-                  <svg
-                    className="mx-auto h-12 w-12 text-gray-400"
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 48 48"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <div className="flex text-sm text-gray-600">
-                    <label
-                      htmlFor="file-upload"
-                      className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+              {loading ? (
+                <Loading />
+              ) : (
+                <div className="mt-1 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center">
+                  <div className="space-y-1 text-center">
+                    <svg
+                      className="mx-auto h-12 w-12 text-gray-400"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 48 48"
+                      aria-hidden="true"
                     >
-                      <span>Upload a file</span>
-                      <input
-                        id="file-upload"
-                        name="file-upload"
-                        type="file"
-                        className="sr-only"
+                      <path
+                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
+                    </svg>
+                    <div className="flex text-sm text-gray-600 justify-center">
+                      <label
+                        htmlFor="imagePreview"
+                        className="relative cursor-pointer text-center bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                      >
+                        <span>Upload a file</span>
+                        <input
+                          id="imagePreview"
+                          name="imagePreview"
+                          accept="image/*"
+                          type="file"
+                          className="sr-only"
+                          onChange={handleImage}
+                        />
+                      </label>
+                      <p className="pl-1">or drag and drop</p>
+                    </div>
+                    {preview ? (
+                      <>
+                        <div className="relative w-full h-80 bg-white rounded-lg overflow-hidden">
+                          <img
+                            className="w-full h-full object-center object-cover"
+                            src={preview}
+                            alt="your uploaded image"
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          onClick={() => setPreview('')}
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    ) : (
+                      <p className="text-xs text-gray-500">
+                        PNG, JPG, GIF up to 10MB
+                      </p>
+                    )}
                   </div>
-                  <p className="text-xs text-gray-500">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

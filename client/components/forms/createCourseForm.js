@@ -7,8 +7,11 @@ const CreateCourseForm = ({
   step,
   setStep,
   values,
+  setValues,
+  preview,
+  setPreview,
   handleChange,
-  setValues
+  handleImage
 }) => {
   const nextStep = (e) => {
     setStep((prevState) => prevState + 1);
@@ -25,7 +28,10 @@ const CreateCourseForm = ({
       values={values}
       setValues={setValues}
       handleChange={handleChange}
+      handleImage={handleImage}
       nextStep={nextStep}
+      preview={preview}
+      setPreview={setPreview}
     />
   );
 };
