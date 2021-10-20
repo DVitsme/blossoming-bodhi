@@ -100,6 +100,18 @@ const SignedIn = ({ user, dispatch }) => {
                   <a
                     href="#"
                     className={classNames(
+                      'block px-4 py-2 text-sm text-gray-700 border-b border-gray-200 bg-gray-100 select-none cursor-default'
+                    )}
+                  >
+                    {user.role.at(-1)} Account
+                  </a>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href="#"
+                    className={classNames(
                       active ? 'bg-gray-100' : '',
                       'block px-4 py-2 text-sm text-gray-700'
                     )}
