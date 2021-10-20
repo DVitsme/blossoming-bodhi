@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   CreditCardIcon,
   KeyIcon,
@@ -5,9 +6,13 @@ import {
   UserGroupIcon,
   ViewGridAddIcon
 } from '@heroicons/react/outline';
-import { useState } from 'react';
+import axios from 'axios';
+import Resizer from 'react-image-file-resizer';
+import { toast } from 'react-toastify';
+
 import CreateCourseForm from '../../components/forms/createCourseForm';
 import { classNames } from '../../utils/classNames';
+import { axiosPublic } from '../../actions/axios';
 
 const Create = () => {
   const [values, setValues] = useState({
@@ -20,7 +25,7 @@ const Create = () => {
     loading: false,
     imagePreview: ''
   });
-
+  const [preview, setPreview] = useState('');
   const [step, setStep] = useState(0);
 
   const handleStepChange = (index) => {
@@ -37,7 +42,24 @@ const Create = () => {
       }));
   };
 
-  const handleImage = () => {};
+  const handleImage = (e) => {
+    let file = e.target.files[0];
+    setPreview(window.URL.createObjectURL(file));
+    setValues({ ...values, loading: true });
+    Resizer.imageFileResizer(file, 720, 500, 'JPEG', 100, 0, async (uri) => {
+      try {
+        let { data } = await axiosPublic.post('/course/upload-image', {
+          image: uri
+        });
+        console.log('IMAGE UPLOADED', data);
+        setValues({ ...values, loading: false });
+      } catch (err) {
+        console.log(err);
+        setValues({ ...values, loading: false });
+        toast.error('Image upload failed, please try again');
+      }
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -83,6 +105,8 @@ const Create = () => {
           handleChange={handleChange}
           values={values}
           setValues={setValues}
+          preview={preview}
+          setPreview={setPreview}
         />
       </div>
     </div>
